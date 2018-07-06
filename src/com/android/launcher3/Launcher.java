@@ -93,6 +93,7 @@ import com.android.launcher3.compat.AppWidgetManagerCompat;
 import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.LauncherAppsCompatVO;
 import com.android.launcher3.compat.UserManagerCompat;
+import com.android.launcher3.compat.WallpaperManagerCompat;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.dragndrop.DragController;
 import com.android.launcher3.dragndrop.DragLayer;
@@ -960,6 +961,9 @@ public class Launcher extends BaseActivity
             mScrimAnimator.start();
         }
         mShouldFadeInScrim = false;
+
+        // Update theme if it changed
+        WallpaperManagerCompat.getInstance(Launcher.this).updateAllListeners();
     }
 
     @Override
