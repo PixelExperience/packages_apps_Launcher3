@@ -397,9 +397,10 @@ public class Launcher extends BaseActivity
         mSettingsObserver = new SystemThemeObserver(this.getContentResolver());
         mSettingsObserver.register("system_ui_theme");
         mSystemTheme = mSettingsObserver.getSettingInt();
-        boolean forceDark = mSystemTheme == 2;
-        boolean forceLight = mSystemTheme == 1;
-        overrideTheme(wallpaperColorInfo.isDark(), wallpaperColorInfo.supportsDarkText(), forceDark, forceLight, wallpaperColorInfo.isTransparent());
+        boolean isAutomatic = Utilities.getThemeHints(this, 0) == 0;
+        boolean forceDark = (isAutomatic && mSystemTheme == 2) || Utilities.getThemeHints(this, 0) == 2;
+        boolean forceLight = (isAutomatic && mSystemTheme == 1) || Utilities.getThemeHints(this, 0) == 1;
+        overrideTheme(wallpaperColorInfo.isDark(), wallpaperColorInfo.supportsDarkText(), forceDark, forceLight);
 
         super.onCreate(savedInstanceState);
 
@@ -519,13 +520,11 @@ public class Launcher extends BaseActivity
         recreate();
     }
 
-    protected void overrideTheme(boolean isDark, boolean supportsDarkText, boolean forceDark, boolean forceLight, boolean isTransparent) {
+    protected void overrideTheme(boolean isDark, boolean supportsDarkText, boolean forceDark, boolean forceLight) {
         if (isDark || forceDark) {
             setTheme(R.style.LauncherThemeDark);
         } else if (supportsDarkText) {
             setTheme(R.style.LauncherThemeDarkText);
-        } else if (isTransparent) {
-            setTheme(R.style.LauncherThemeTransparent);
         }
     }
 
