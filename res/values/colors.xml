@@ -68,7 +68,6 @@
     <color name="qsb_drawer_text_color">#ff212121</color>
 
     <!-- Fastscroller -->
-    <color name="fastscroller_thumb_text_color">@*android:color/fastscroller_thumb_text_color</color>
     <color name="fastscroller_thumb_background_color">@*android:color/accent_device_default_light</color>
 
 </resources>
