@@ -36,7 +36,6 @@ public class WallpaperColorInfo implements WallpaperManagerCompat.OnColorsChange
     private int mSecondaryColor;
     private boolean mIsDark;
     private boolean mSupportsDarkText;
-    private boolean mIsTransparent;
     private OnThemeChangeListener mOnThemeChangeListener;
 
     private WallpaperColorInfo(Context context) {
@@ -63,18 +62,13 @@ public class WallpaperColorInfo implements WallpaperManagerCompat.OnColorsChange
         return mSupportsDarkText;
     }
 
-    public boolean isTransparent() {
-        return mIsTransparent;
-    }
-
     @Override
     public void onColorsChanged(WallpaperColorsCompat colors, int which) {
         if ((which & FLAG_SYSTEM) != 0) {
             boolean wasDarkTheme = mIsDark;
             boolean didSupportDarkText = mSupportsDarkText;
-            boolean wasTransparent = mIsTransparent;
             update(colors);
-            notifyChange(wasDarkTheme != mIsDark || didSupportDarkText != mSupportsDarkText || wasTransparent != mIsTransparent);
+            notifyChange(wasDarkTheme != mIsDark || didSupportDarkText != mSupportsDarkText);
         }
     }
 
@@ -92,7 +86,6 @@ public class WallpaperColorInfo implements WallpaperManagerCompat.OnColorsChange
                 : wallpaperColors.getColorHints());
         mSupportsDarkText = (colorHints & WallpaperColorsCompat.HINT_SUPPORTS_DARK_TEXT) > 0;
         mIsDark = (colorHints & WallpaperColorsCompat.HINT_SUPPORTS_DARK_THEME) > 0;
-        mIsTransparent = (colorHints & WallpaperColorsCompat.HINT_SUPPORTS_TRANSPARENCY) > 0;
     }
 
     public void setOnThemeChangeListener(OnThemeChangeListener onThemeChangeListener) {
